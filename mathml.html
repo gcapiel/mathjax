@@ -47,41 +47,44 @@
               });
           })});
       }
+      function copyMML() {
+		document.getElementById("mathmlinput").innerHTML = document.getElementById("description").value;
+		document.getElementById("mathspeak").innerHTML = '';
+        MathJax.Hub.Typeset(document.getElementById("mathmlinput"));
+	 }
       </script>
       </head>
 <body>
 <div id="audio"></div>
-<table><tr><td valign="top">
-	<p>
-		<math xmlns="http://www.w3.org/1998/Math/MathML">
+<b>Description:</b><br>
+<textarea id="description" rows="10" cols="80"></textarea>
+<button onclick=copyMML();>Update Math</button>
+<br><br>
+<table border="1"><tr><td valign="center">
+<div id="mathmlinput">
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="true">
+    <mrow>
+      <mi>f</mi>
+        <mo>(</mo>
+        <mi>x</mi>
+        <mo>)</mo>
+    </mrow>
+    <mo>&#x2248;</mo>
+    <msup>
+      <mi>x</mi>
+      <mn>3</mn>
+    </msup>
+    <mo>+</mo>
 			<mfrac>
 				<mn>8</mn>
 				<mn>10</mn>
 			</mfrac>
-		</math><br />
-	</p>
+  </mstyle>
+</math>
+</div>
 </td><td valign="top">
 	<div id="mathspeak"></div>
 </td></tr></table>
-
-
-    Description:
-    <textarea id="description" rows="10" cols="80"></textarea>
-    <p>Equation Editor:
-      <textarea id="equation_editor" rows="5" cols="30" onkeyup="display()"></textarea>
-      <div id="svg_node"></div>
-    </p>
-    <button onclick=appendToDescription();>Update Description</button>
-    <button onclick=clearDescription();>Clear Description</button>
-    <p>Some examples to try (courtesy of
-      <a href="http://www1.chapman.edu/~jipsen/mathml/asciimath.html">
-        ASCIIMathML Page
-      </a>:
-    </p>
-    <ul>
-      <li>\frac{d}{dx}f(x)=\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}</li>
-      <li>f(x)=\sum_{n=0}^\infty\frac{f^{(n)}(a)}{n!}(x-a)^n</li>
-      <li>(a,b]={x in RR | a < x <= b}</li>
-    </ul>
 </body>
 </html>
