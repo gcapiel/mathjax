@@ -1,9 +1,15 @@
+
 <!DOCTYPE html>
 <html>
-<head>
-	<title>MathML MathJax Test Page</title>
-	<script type="text/javascript" src="unpackedlanguagebuffer/MathJax.js?config=MML_HTMLorMML,lang_enus"></script>
-	<script src="speakClient.js"></script>
+  <head>
+    <title>MathJax Input Demo</title>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/AsciiMath","output/SVG","output/NativeMML"],
+        extensions: ["asciimath2jax.js","MathMenu.js","MathZoom.js","toMathML.js"]
+      });
+    </script>
+    <script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=default"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript">
       function display() {
@@ -48,22 +54,8 @@
           })});
       }
       </script>
-      </head>
-<body>
-<div id="audio"></div>
-<table><tr><td valign="top">
-	<p>
-		<math xmlns="http://www.w3.org/1998/Math/MathML">
-			<mfrac>
-				<mn>8</mn>
-				<mn>10</mn>
-			</mfrac>
-		</math><br />
-	</p>
-</td><td valign="top">
-	<div id="mathspeak"></div>
-</td></tr></table>
-
+  </head>
+  <body>
 
     Description:
     <textarea id="description" rows="10" cols="80"></textarea>
@@ -83,5 +75,5 @@
       <li>f(x)=\sum_{n=0}^\infty\frac{f^{(n)}(a)}{n!}(x-a)^n</li>
       <li>(a,b]={x in RR | a < x <= b}</li>
     </ul>
-</body>
+  </body>
 </html>

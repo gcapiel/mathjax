@@ -1563,6 +1563,7 @@ MathJax.Hub = {
   mathSpeak: function(inputJax) {
 		MathJax.Extension.jax2MathSpeak.generateMathSpeak(inputJax);
 		var m = MathJax.Extension.jax2MathSpeak.getMathSpeakText();
+		speak.play(m);
 		document.getElementById("mathspeak").innerHTML = document.getElementById("mathspeak").innerHTML + "<p>" + m + "</p>";
 	},
   
