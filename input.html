@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MathJax Input Demo</title>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/AsciiMath","output/SVG","output/NativeMML"],
+        extensions: ["asciimath2jax.js","MathMenu.js","MathZoom.js","toMathML.js"]
+      });
+    </script>
+	<script type="text/javascript" src="unpackedlanguagebuffer/MathJax.js?config=default"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      function display() {
+        var str = document.getElementById("equation_editor").value;
+        var svg_node = document.getElementById("svg_node");
+        svg_node.innerHTML = '`' + str + '`';
+        MathJax.Hub.Typeset(svg_node);
+      }
+      <!-- https://groups.google.com/d/topic/mathjax-users/unL8IjcrTto/discussion -->
+      function toMathML(jax, callback) {
+        var mml;
+        try {
+          mml = jax.root.toMathML("");
+        } catch(err) {
+          if (!err.restart) { throw err; }
+          return MathJax.Callback.After([toMathML, jax, callback], err, restart);
+        }
+        MathJax.Callback(callback)(mml);
+      }
+      function clearDescription() {
+        var description_node = document.getElementById("description");
+        description_node.value = '';
+      }
+      function appendToDescription() {
+        var svg_node = document.getElementById("svg_node");
+        MathJax.Hub.Queue(function() {
+          var jaxen = MathJax.Hub.getAllJax(svg_node);
+          toMathML(jaxen[0], function(mml) {
+            var str = document.getElementById("equation_editor").value;
+            var description_node = document.getElementById("description");
+            $.ajax({
+              url: "service?equation=" + str,
+              success: function(mde_description) {
+                description_node.value += mde_description;
+                description_node.value += "\n";
+                description_node.value += mml;
+              },
+              error: function() {
+                description_node.value += mml;
+              }
+              });
+          })});
+      }
+      </script>
+  </head>
+  <body>
+
+    Description:
+    <textarea id="description" rows="10" cols="80"></textarea>
+    <p>Equation Editor:
+      <textarea id="equation_editor" rows="5" cols="30" onkeyup="display()"></textarea>
+      <div id="svg_node"></div>
+    </p>
+    <button onclick=appendToDescription();>Update Description</button>
+    <button onclick=clearDescription();>Clear Description</button>
+    <p>Some examples to try (courtesy of
+      <a href="http://www1.chapman.edu/~jipsen/mathml/asciimath.html">
+        ASCIIMathML Page
+      </a>:
+    </p>
+    <ul>
+      <li>\frac{d}{dx}f(x)=\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}</li>
+      <li>f(x)=\sum_{n=0}^\infty\frac{f^{(n)}(a)}{n!}(x-a)^n</li>
+      <li>(a,b]={x in RR | a < x <= b}</li>
+    </ul>
+  </body>
+</html>
